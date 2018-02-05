@@ -144,6 +144,10 @@ function POST_B()
     sudo cat $INS_TMP_CONF > $PATH_INSTALL/install.sh
 }
 
+function POST_F()
+{
+    echo -e "\033[32m  ==================== Now you can start the boot-ubuntu using the command sudo lb-build  =============== \033[0m"
+}
 
 IF_ROOT
 PRE_INST
@@ -152,5 +156,6 @@ GIT_CLONE
 VSFTP
 CREATE_LINK $LINK_FILE $LINK_ON_START
 POST_B
+POST_F
 
  
