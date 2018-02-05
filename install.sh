@@ -22,7 +22,6 @@ MSG_STOP="Script execution stopped"
 MSG_GN_INITRD="Creating an initrd file"
 MSG_CHECK_FILE="\033[32m Check if the file exists: \033[0m"
 MSG_OK_STATUS="\033[32m OK \033[0m"
-
 MSG_NO_EX="\033[31m File is missing! \033[0m"
 MSG_CHECK_DIR="\033[32m Checking the existence of the directory: \033[0m"
 MSG_NO_DIR="\033[31m Directory is missing! \033[0m"
