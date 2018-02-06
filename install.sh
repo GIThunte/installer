@@ -9,6 +9,7 @@ LINK_PRE_START="$PATH_INSTALL/start"
 LINK_ON_START="/usr/local/bin/lb-ubuntu"
 INST_PKG="git vsftpd initramfs-tools-core "
 PATH_CONF="base_img.conf"
+
 #MSG
 MSG_IF_ROOT="This script must be run as root"
 MSG_TEST_FILE="Check existence"
@@ -71,28 +72,27 @@ function PRE_INST()
 function IF_FILE()
 {
     for FILE_EX in $@; do
-       echo -ne "$MSG_CHECK_FILE \033[33m $FILE_EX \033[0m"
-       if [[ -f $FILE_EX ]]; then
-          echo -e " $MSG_OK_STATUS"
-       else
-          echo -e " $MSG_NO_EX"
-          exit 1
-       fi
-   done
-
+        echo -ne "$MSG_CHECK_FILE \033[33m $FILE_EX \033[0m"
+        if [[ -f $FILE_EX ]]; then
+            echo -e " $MSG_OK_STATUS"
+        else
+            echo -e " $MSG_NO_EX"
+            exit 1
+        fi
+    done
 }
 
 function IF_DIR()
 {
     for D_EX in $@; do
-       echo -ne "$MSG_CHECK_DIR \033[33m $D_EX \033[0m"
-       if [[ -d $D_EX ]]; then
-          echo -e " $MSG_OK_STATUS"
-       else
-          echo -e " $MSG_NO_DIR"
-          exit 1
-       fi
-   done
+        echo -ne "$MSG_CHECK_DIR \033[33m $D_EX \033[0m"
+        if [[ -d $D_EX ]]; then
+            echo -e " $MSG_OK_STATUS"
+        else
+            echo -e " $MSG_NO_DIR"
+            exit 1
+        fi
+    done
 }
 
 function CREATE_LINK()
