@@ -133,7 +133,9 @@ function GIT_CLONE()
 
 function POST_B()
 {
+    IF_FILE $PATH_INSTALL/install.sh
     CHECK_IMG_VER=`cat $PATH_INSTALL/install.sh | grep "^IMAGE_VER" | awk -F'"' '{print $2}'`
+    IF_FILE $PATH_INSTALL/base_img.conf
     sudo echo "PATH_FTP=$PATH_FTP" >> $PATH_INSTALL/base_img.conf
     sudo echo "IMAGE_NVER=$IMAGE_NVER" >> $PATH_INSTALL/base_img.conf
     sudo echo "IMAGE_VER=$IMAGE_VER" >> $PATH_INSTALL/base_img.conf
