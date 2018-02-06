@@ -7,7 +7,8 @@ URL_GIT="https://github.com/GIThunte/build-ubuntu.git"
 LINK_FILE="$PATH_INSTALL/start.sh"
 LINK_PRE_START="$PATH_INSTALL/start"
 LINK_ON_START="/usr/local/bin/lb-ubuntu"
-INST_PKG="git vsftpd initramfs-tools-core"
+INST_PKG="git vsftpd initramfs-tools-core "
+PATH_CONF="base_img.conf"
 #MSG
 MSG_IF_ROOT="This script must be run as root"
 MSG_TEST_FILE="Check existence"
@@ -100,6 +101,7 @@ function CREATE_LINK()
         exit 1
     else
         ln -v -s -f $1 $2
+        IF_FILE $1
         IF_FILE $2
     fi
 }
@@ -129,26 +131,28 @@ function GIT_CLONE()
     IF_FILE $LINK_FILE
 }
 
-
-
 function POST_B()
 {
-    IF_FILE $PATH_INSTALL/install.sh
-    CHECK_IMG_VER=`cat $PATH_INSTALL/install.sh | grep "^IMAGE_VER" | awk -F'"' '{print $2}'`
+    IF_FILE $PATH_INSTALL/$PATH_CONF
+    NAME_CHROOT_SC=`cat $PATH_INSTALL/$PATH_CONF | grep CHROOT_SCRIPT | awk -F"=" '{print $2}' | head -n1 | awk -F'"' '{print $2}'`
+    IF_FILE $PATH_INSTALL/$NAME_CHROOT_SC
+    CHECK_IMG_VER=`cat $PATH_INSTALL/$NAME_CHROOT_SC | grep "^IMAGE_VER" | awk -F'"' '{print $2}'`
     IF_FILE $PATH_INSTALL/base_img.conf
-    sudo echo "PATH_FTP=$PATH_FTP" >> $PATH_INSTALL/base_img.conf
-    sudo echo "IMAGE_NVER=$IMAGE_NVER" >> $PATH_INSTALL/base_img.conf
-    sudo echo "IMAGE_VER=$IMAGE_VER" >> $PATH_INSTALL/base_img.conf
-    IF_FILE $PATH_INSTALL/install.sh
-    sudo sed "s/$CHECK_IMG_VER/$IMAGE_VER/g" $PATH_INSTALL/install.sh > $INS_TMP_CONF
+    sudo echo "PATH_FTP=$PATH_FTP" >> $PATH_INSTALL/$PATH_CONF
+    sudo echo "IMAGE_NVER=$IMAGE_NVER" >> $PATH_INSTALL/$PATH_CONF
+    sudo echo "IMAGE_VER=$IMAGE_VER" >> $PATH_INSTALL/$PATH_CONF
+    IF_FILE $PATH_INSTALL/$NAME_CHROOT_SC
+    sudo sed "s/$CHECK_IMG_VER/$IMAGE_VER/g" $PATH_INSTALL/$NAME_CHROOT_SC > $INS_TMP_CONF
     IF_FILE $INS_TMP_CONF
-    sudo cat $INS_TMP_CONF > $PATH_INSTALL/install.sh
+    sudo cat $INS_TMP_CONF > $PATH_INSTALL/$NAME_CHROOT_SC
 }
 
 function POST_F()
 {
     echo -e "\033[32m  ==================== Now you can start the boot-ubuntu using the command sudo lb-build  =============== \033[0m"
 }
+
+########################################
 
 IF_ROOT
 PRE_INST
@@ -159,4 +163,4 @@ CREATE_LINK $LINK_FILE $LINK_ON_START
 POST_B
 POST_F
 
- 
+########################################
