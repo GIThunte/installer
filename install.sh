@@ -26,6 +26,7 @@ MSG_OK_STATUS="\033[32m OK \033[0m"
 MSG_NO_EX="\033[31m File is missing! \033[0m"
 MSG_CHECK_DIR="\033[32m Checking the existence of the directory: \033[0m"
 MSG_NO_DIR="\033[31m Directory is missing! \033[0m"
+MSG_END_INST="\n\n\n\033[32m  ==================== Now you can start the boot-ubuntu using the command sudo lb-build  =============== \033[0m\n\n\n"
 
 #ftp
 FTP_CONFIG="/etc/vsftpd.conf"
@@ -149,7 +150,7 @@ function POST_B()
 
 function POST_F()
 {
-    echo -e "\033[32m  ==================== Now you can start the boot-ubuntu using the command sudo lb-build  =============== \033[0m"
+    echo -e "$MSG_END_INST"
 }
 
 ########################################
